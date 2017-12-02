@@ -6,7 +6,7 @@ plugins {
 	id 'jaci.openrio.gradle.GradleRIO' version "2017.1.5"
 }
 
-group 'org.usfirst.frc.team449.ballbasaur-rewrite'
+group 'org.usfirst.frc.team449.Ballbasaur-Code-Rewrite'
 version '1.0'
 
 repositories {

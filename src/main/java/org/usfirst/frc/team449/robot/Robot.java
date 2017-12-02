@@ -57,6 +57,11 @@ public class Robot extends IterativeRobot {
 	private DriveTalonCluster driveSubsystem;
 
 	/**
+	 * The Notifier running the logging thread.
+	 */
+	private Notifier loggerNotifier;
+
+	/**
 	 * The method that runs when the robot is turned on. Initializes all subsystems from the map.
 	 */
 	public void robotInit() {
@@ -70,7 +75,7 @@ public class Robot extends IterativeRobot {
 		System.out.println("Started robotInit.");
 		Yaml yaml = new Yaml();
 		try {
-			Map<?, ?> normalized = (Map<?, ?>) yaml.load(new FileReader("resources/ballbasaur_map.yml"));
+			Map<?, ?> normalized = (Map<?, ?>) yaml.load(new FileReader(RESOURCES_PATH+"ballbasaur_map.yml"));
 			YAMLMapper mapper = new YAMLMapper();
 			String fixed = mapper.writeValueAsString(normalized);
 			mapper.registerModule(new ParameterNamesModule(JsonCreator.Mode.PROPERTIES));
@@ -80,6 +85,10 @@ public class Robot extends IterativeRobot {
 			e.printStackTrace();
 		}
 
+		//Read sensors
+		this.robotMap.getUpdater().run();
+
+		this.loggerNotifier = new Notifier(robotMap.getLogger());
 		this.driveSubsystem = robotMap.getDrive();
 
 		//Run the logger to write all the events that happened during initialization to a file.
@@ -87,11 +96,17 @@ public class Robot extends IterativeRobot {
 		Clock.updateTime();
 	}
 
-	 //Run when we first enable in teleop.
+	//Run when we first enable in teleop.
 	@Override
 	public void teleopInit() {
+		//Read sensors
+		this.robotMap.getUpdater().run();
+
 		//Enables the robot
 		if (!enabled) {
+			if (robotMap.getStartupCommand() != null) {
+				robotMap.getStartupCommand().start();
+			}
 			enabled = true;
 		}
 
@@ -107,6 +122,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		//Refresh the current time.
 		Clock.updateTime();
+		//Read sensors
+		this.robotMap.getUpdater().run();
 		//Run all commands. This is a WPILib thing you don't really have to worry about.
 		Scheduler.getInstance().run();
 	}
@@ -122,13 +139,13 @@ public class Robot extends IterativeRobot {
 	/**
 	 * Runs every tick in autonomous.
 
-	@Override
-	public void autonomousPeriodic() {
-		//Update the current time
-		Clock.updateTime();
-		//Run all commands. This is a WPILib thing you don't really have to worry about.
-		Scheduler.getInstance().run();
-	}*/
+	 @Override
+	 public void autonomousPeriodic() {
+	 //Update the current time
+	 Clock.updateTime();
+	 //Run all commands. This is a WPILib thing you don't really have to worry about.
+	 Scheduler.getInstance().run();
+	 }*/
 
 	/**
 	 * Run when we disable.
@@ -140,16 +157,16 @@ public class Robot extends IterativeRobot {
 	/**
 	 * Run when we first enable in test mode.
 
-	@Override
-	public void testInit() {
-	}*/
+	 @Override
+	 public void testInit() {
+	 }*/
 
 	/**
 	 * Run every tic while disabled
-	@Override
-	public void disabledPeriodic() {
-		Clock.updateTime();
-	}*/
+	 @Override
+	 public void disabledPeriodic() {
+	 Clock.updateTime();
+	 }*/
 
 	/**
 	 * Sends the current mode (auto, teleop, or disabled) over I2C.
@@ -158,17 +175,17 @@ public class Robot extends IterativeRobot {
 	 * @param mode The current mode, represented as a String.
 
 	private void sendModeOverI2C(I2C i2C, String mode) {
-		//If the I2C exists
-		if (i2C != null) {
-			//Turn the alliance and mode into a character array.
-			char[] CharArray = (allianceString + "_" + mode).toCharArray();
-			//Transfer the character array to a byte array.
-			byte[] WriteData = new byte[CharArray.length];
-			for (int i = 0; i < CharArray.length; i++) {
-				WriteData[i] = (byte) CharArray[i];
-			}
-			//Send the byte array.
-			i2C.transaction(WriteData, WriteData.length, null, 0);
-		}
+	//If the I2C exists
+	if (i2C != null) {
+	//Turn the alliance and mode into a character array.
+	char[] CharArray = (allianceString + "_" + mode).toCharArray();
+	//Transfer the character array to a byte array.
+	byte[] WriteData = new byte[CharArray.length];
+	for (int i = 0; i < CharArray.length; i++) {
+	WriteData[i] = (byte) CharArray[i];
+	}
+	//Send the byte array.
+	i2C.transaction(WriteData, WriteData.length, null, 0);
+	}
 	}*/
 }
