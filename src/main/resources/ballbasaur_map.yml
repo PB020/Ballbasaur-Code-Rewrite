@@ -1,0 +1,84 @@
+---
+drive:
+    org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonCluster:
+        '@id': drive
+        leftMaster:
+            org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
+                &leftMaster
+                '@id': leftMaster
+                port: 5
+                invertInVoltage: false
+                enableBrakeMode: true
+                feetPerRotation: 1.002
+                currentLimit: 40
+                feedbackDevice: QuadEncoder
+                encoderCPR: 512
+                reverseSensor: false
+                reverseOutput: false
+                perGearSettings:
+                  - &gearSettings
+                    fwdPeakOutputVoltage: 12
+                    fwdNominalOutputVoltage: 0.0
+                    maxSpeed: 11.8
+                    kP: 0.1
+                    kI: 0.0
+                    kD: 1.0
+                    motionProfilePFwd: 1.0
+                    motionProfileIFwd: 0.0
+                    motionProfileDFwd: 20.0
+                    maxAccelFwd: 54
+                    maxSpeedMPFwd: 15.132
+                    frictionCompFPSFwd: 1.55
+                slaves:
+                    - '@id': talon1
+                      port: 6
+                      inverted: false
+                    - '@id': talon2
+                      port: 1
+                      inverted: false
+        rightMaster:
+            org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
+                <<: *leftMaster
+                '@id': rightMaster
+                port: 2
+                invertInVoltage: true
+                reverseSensor: true
+                reverseOutput: true
+                perGearSettings:
+                  - <<: *gearSettings
+                    maxSpeedMPFwd: 13.619
+                    frictionCompFPSFwd: 1.705
+                slaves:
+                    - '@id': talon3
+                      port: 9
+                      inverted: false
+                    - '@id': talon5
+                      port: 8
+                      inverted: false
+        VelScale: 0.9
+        navX:
+            '@id': driveNavX
+            port: kMXP
+pneumatics:
+    org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
+        '@id': pneumatics
+        nodeID: 15
+
+defaultDriveCommand:
+    org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXDefaultDrive:
+        '@id': defaultDriveCommand
+        kP: 0.01
+        toleranceBuffer: 25
+        absoluteTolerance: 1
+        maximumOutput: 0.3333
+        maxAngularVelToEnterLoop: 1
+        driveStraightLoopEntryTimer:
+            '@id': driveStraightLoopEntryTimer
+            bufferTimeSeconds: 0.15
+        inverted: false
+        subsystem:
+            org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonCluster:
+                drive
+        oi:
+            org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
+                oi
