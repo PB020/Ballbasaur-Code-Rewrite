@@ -92,13 +92,15 @@ public class Robot extends IterativeRobot {
 		this.driveSubsystem = robotMap.getDrive();
 
 		//Run the logger to write all the events that happened during initialization to a file.
-//		robotMap.getLogger().run();
+		robotMap.getLogger().run();
 		Clock.updateTime();
 	}
 
 	 //Run when we first enable in teleop.
 	@Override
 	public void teleopInit() {
+		doStartupTasks();
+
 		//Read sensors
 		this.robotMap.getUpdater().run();
 
@@ -154,38 +156,12 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 	}
 
-	/**
-	 * Run when we first enable in test mode.
-
-	@Override
-	public void testInit() {
-	}*/
-
-	/**
-	 * Run every tic while disabled
-	@Override
-	public void disabledPeriodic() {
+	private void doStartupTasks() {
+		//Refresh the current time.
 		Clock.updateTime();
-	}*/
 
-	/**
-	 * Sends the current mode (auto, teleop, or disabled) over I2C.
-	 *
-	 * @param i2C  The I2C channel to send the data over.
-	 * @param mode The current mode, represented as a String.
-
-	private void sendModeOverI2C(I2C i2C, String mode) {
-		//If the I2C exists
-		if (i2C != null) {
-			//Turn the alliance and mode into a character array.
-			char[] CharArray = (allianceString + "_" + mode).toCharArray();
-			//Transfer the character array to a byte array.
-			byte[] WriteData = new byte[CharArray.length];
-			for (int i = 0; i < CharArray.length; i++) {
-				WriteData[i] = (byte) CharArray[i];
-			}
-			//Send the byte array.
-			i2C.transaction(WriteData, WriteData.length, null, 0);
-		}
-	}*/
+		//Start running the logger
+		loggerNotifier.startPeriodic(robotMap.getLogger().getLoopTimeSecs());
+		System.out.println("Started logger!");
+	}
 }

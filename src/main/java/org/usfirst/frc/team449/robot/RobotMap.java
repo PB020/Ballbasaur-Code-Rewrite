@@ -26,6 +26,9 @@ public class RobotMap {
 	private Pneumatics pneumatics;
 
 	@Nullable
+	private IntakeSingleRollerPneumatic intake;
+
+	@Nullable
 	private final Command startupCommand;
 
 	@NotNull
@@ -45,6 +48,7 @@ public class RobotMap {
 
 	@JsonCreator
 	public RobotMap(@NotNull List<CommandButton> buttons, @Nullable SubsystemSolenoid shooter, @Nullable Pneumatics pneumatics,
+	                @Nullable IntakeSingleRollerPneumatic intake,
 	                @NotNull @JsonProperty(required = true) Logger logger,
 	                @NotNull @JsonProperty(required = true) MappedRunnable updater,
 	                @NotNull @JsonProperty(required = true) DriveTalonCluster drive,
@@ -52,6 +56,7 @@ public class RobotMap {
 	                @NotNull @JsonProperty(required = true) YamlCommand defaultDriveCommand,
 	                @Nullable YamlCommand startupCommand){
 		this.buttons = buttons;
+		this.intake = intake;
 		this.shooter = shooter;
 		this.pneumatics = pneumatics;
 		this.logger = logger;
@@ -97,4 +102,7 @@ public class RobotMap {
 
 	@NotNull
 	public Runnable getUpdater() { return updater; }
+
+	@Nullable
+	public IntakeSingleRollerPneumatic getIntake() { return intake; }
 }

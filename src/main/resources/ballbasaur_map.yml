@@ -59,6 +59,21 @@ drive:
         ahrs:
             '@id': driveNavX
             port: kMXP
+intake:
+    org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
+        '@id': intake
+        actuator:
+            '@id': intakeActuator
+            module: 15
+            forward: 1
+            reverse: 0
+        roller:
+            org.usfirst.frc.team449.robot.jacksonWrappers.MappedVictor:
+                '@id': intakeMotor
+                port: 0
+                inverted: false
+        intakeVelocityFast: 1
+        intakeVelocitySlow: .5
 pneumatics:
     org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
         '@id': pneumatics
@@ -121,6 +136,43 @@ startupCommand:
                     org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonCluster:
                         drive
                 absolutePosAngleTolerance: 5
+buttons:
+    -   button:
+            org.usfirst.frc.team449.robot.oi.buttons.TriggerButton:
+                '@id': intakeForwardButton
+                throttle:
+                    org.usfirst.frc.team449.robot.oi.throttles.ThrottleBasic:
+                        '@id': intakeForwardButtonThrottle
+                        stick:
+                            org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                                driverGamepad
+                        axis: 2
+                triggerAt: 0.7
+        command:
+            org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidForward:
+                '@id': intakeForwardCommand
+                subsystem:
+                    org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
+                        intake
+        action: WHEN_PRESSED
+    -   button:
+            org.usfirst.frc.team449.robot.oi.buttons.TriggerButton:
+                '@id': intakeReverseButton
+                throttle:
+                    org.usfirst.frc.team449.robot.oi.throttles.ThrottleBasic:
+                        '@id': intakeReverseButtonThrottle
+                        stick:
+                            org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                                driverGamepad
+                        axis: 3
+                triggerAt: 0.7
+        command:
+            org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidReverse:
+                '@id': intakeReverseCommand
+                subsystem:
+                    org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
+                        intake
+        action: WHEN_PRESSED
 logger:
     '@id': logger
     subsystems:
@@ -139,3 +191,7 @@ updater:
                 drive
             - org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
                 oi
+            - org.usfirst.frc.team449.robot.oi.throttles.ThrottleBasic:
+                intakeForwardButtonThrottle
+            - org.usfirst.frc.team449.robot.oi.throttles.ThrottleBasic:
+                intakeReverseButtonThrottle
