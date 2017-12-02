@@ -99,11 +99,7 @@ public class Robot extends IterativeRobot {
 	//Run when we first enable in teleop.
 	@Override
 	public void teleopInit() {
-<<<<<<< HEAD
 		doStartupTasks();
-
-=======
->>>>>>> 68c4ddd590905f57fb7c3963f7cb84ddc924e219
 		//Read sensors
 		this.robotMap.getUpdater().run();
 
@@ -159,7 +155,6 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 	}
 
-<<<<<<< HEAD
 	private void doStartupTasks() {
 		//Refresh the current time.
 		Clock.updateTime();
@@ -168,7 +163,7 @@ public class Robot extends IterativeRobot {
 		loggerNotifier.startPeriodic(robotMap.getLogger().getLoopTimeSecs());
 		System.out.println("Started logger!");
 	}
-=======
+
 	/**
 	 * Run when we first enable in test mode.
 
@@ -203,5 +198,4 @@ public class Robot extends IterativeRobot {
 	i2C.transaction(WriteData, WriteData.length, null, 0);
 	}
 	}*/
->>>>>>> 68c4ddd590905f57fb7c3963f7cb84ddc924e219
 }
