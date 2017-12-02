@@ -96,11 +96,14 @@ public class Robot extends IterativeRobot {
 		Clock.updateTime();
 	}
 
-	 //Run when we first enable in teleop.
+	//Run when we first enable in teleop.
 	@Override
 	public void teleopInit() {
+<<<<<<< HEAD
 		doStartupTasks();
 
+=======
+>>>>>>> 68c4ddd590905f57fb7c3963f7cb84ddc924e219
 		//Read sensors
 		this.robotMap.getUpdater().run();
 
@@ -141,13 +144,13 @@ public class Robot extends IterativeRobot {
 	/**
 	 * Runs every tick in autonomous.
 
-	@Override
-	public void autonomousPeriodic() {
-		//Update the current time
-		Clock.updateTime();
-		//Run all commands. This is a WPILib thing you don't really have to worry about.
-		Scheduler.getInstance().run();
-	}*/
+	 @Override
+	 public void autonomousPeriodic() {
+	 //Update the current time
+	 Clock.updateTime();
+	 //Run all commands. This is a WPILib thing you don't really have to worry about.
+	 Scheduler.getInstance().run();
+	 }*/
 
 	/**
 	 * Run when we disable.
@@ -156,6 +159,7 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 	}
 
+<<<<<<< HEAD
 	private void doStartupTasks() {
 		//Refresh the current time.
 		Clock.updateTime();
@@ -164,4 +168,40 @@ public class Robot extends IterativeRobot {
 		loggerNotifier.startPeriodic(robotMap.getLogger().getLoopTimeSecs());
 		System.out.println("Started logger!");
 	}
+=======
+	/**
+	 * Run when we first enable in test mode.
+
+	 @Override
+	 public void testInit() {
+	 }*/
+
+	/**
+	 * Run every tic while disabled
+	 @Override
+	 public void disabledPeriodic() {
+	 Clock.updateTime();
+	 }*/
+
+	/**
+	 * Sends the current mode (auto, teleop, or disabled) over I2C.
+	 *
+	 * @param i2C  The I2C channel to send the data over.
+	 * @param mode The current mode, represented as a String.
+
+	private void sendModeOverI2C(I2C i2C, String mode) {
+	//If the I2C exists
+	if (i2C != null) {
+	//Turn the alliance and mode into a character array.
+	char[] CharArray = (allianceString + "_" + mode).toCharArray();
+	//Transfer the character array to a byte array.
+	byte[] WriteData = new byte[CharArray.length];
+	for (int i = 0; i < CharArray.length; i++) {
+	WriteData[i] = (byte) CharArray[i];
+	}
+	//Send the byte array.
+	i2C.transaction(WriteData, WriteData.length, null, 0);
+	}
+	}*/
+>>>>>>> 68c4ddd590905f57fb7c3963f7cb84ddc924e219
 }

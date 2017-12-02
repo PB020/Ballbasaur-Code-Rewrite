@@ -136,6 +136,7 @@ startupCommand:
                     org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonCluster:
                         drive
                 absolutePosAngleTolerance: 5
+<<<<<<< HEAD
 buttons:
     -   button:
             org.usfirst.frc.team449.robot.oi.buttons.TriggerButton:
@@ -173,6 +174,8 @@ buttons:
                     org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
                         intake
         action: WHEN_PRESSED
+=======
+>>>>>>> 68c4ddd590905f57fb7c3963f7cb84ddc924e219
 logger:
     '@id': logger
     subsystems:
@@ -190,8 +193,12 @@ updater:
             - org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
                 drive
             - org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
+<<<<<<< HEAD
                 oi
             - org.usfirst.frc.team449.robot.oi.throttles.ThrottleBasic:
                 intakeForwardButtonThrottle
             - org.usfirst.frc.team449.robot.oi.throttles.ThrottleBasic:
                 intakeReverseButtonThrottle
+=======
+                oi
+>>>>>>> 68c4ddd590905f57fb7c3963f7cb84ddc924e219

@@ -26,9 +26,12 @@ public class RobotMap {
 	private Pneumatics pneumatics;
 
 	@Nullable
+<<<<<<< HEAD
 	private IntakeSingleRollerPneumatic intake;
 
 	@Nullable
+=======
+>>>>>>> 68c4ddd590905f57fb7c3963f7cb84ddc924e219
 	private final Command startupCommand;
 
 	@NotNull
@@ -48,7 +51,10 @@ public class RobotMap {
 
 	@JsonCreator
 	public RobotMap(@NotNull List<CommandButton> buttons, @Nullable SubsystemSolenoid shooter, @Nullable Pneumatics pneumatics,
+<<<<<<< HEAD
 	                @Nullable IntakeSingleRollerPneumatic intake,
+=======
+>>>>>>> 68c4ddd590905f57fb7c3963f7cb84ddc924e219
 	                @NotNull @JsonProperty(required = true) Logger logger,
 	                @NotNull @JsonProperty(required = true) MappedRunnable updater,
 	                @NotNull @JsonProperty(required = true) DriveTalonCluster drive,
@@ -102,7 +108,10 @@ public class RobotMap {
 
 	@NotNull
 	public Runnable getUpdater() { return updater; }
+<<<<<<< HEAD
 
 	@Nullable
 	public IntakeSingleRollerPneumatic getIntake() { return intake; }
+=======
+>>>>>>> 68c4ddd590905f57fb7c3963f7cb84ddc924e219
 }
