@@ -57,6 +57,11 @@ public class Robot extends IterativeRobot {
 	private DriveTalonCluster driveSubsystem;
 
 	/**
+	 * The Notifier running the logging thread.
+	 */
+	private Notifier loggerNotifier;
+
+	/**
 	 * The method that runs when the robot is turned on. Initializes all subsystems from the map.
 	 */
 	public void robotInit() {
@@ -70,7 +75,7 @@ public class Robot extends IterativeRobot {
 		System.out.println("Started robotInit.");
 		Yaml yaml = new Yaml();
 		try {
-			Map<?, ?> normalized = (Map<?, ?>) yaml.load(new FileReader("resources/ballbasaur_map.yml"));
+			Map<?, ?> normalized = (Map<?, ?>) yaml.load(new FileReader(RESOURCES_PATH+"ballbasaur_map.yml"));
 			YAMLMapper mapper = new YAMLMapper();
 			String fixed = mapper.writeValueAsString(normalized);
 			mapper.registerModule(new ParameterNamesModule(JsonCreator.Mode.PROPERTIES));
@@ -80,6 +85,10 @@ public class Robot extends IterativeRobot {
 			e.printStackTrace();
 		}
 
+		//Read sensors
+		this.robotMap.getUpdater().run();
+
+		this.loggerNotifier = new Notifier(robotMap.getLogger());
 		this.driveSubsystem = robotMap.getDrive();
 
 		//Run the logger to write all the events that happened during initialization to a file.
@@ -90,8 +99,14 @@ public class Robot extends IterativeRobot {
 	 //Run when we first enable in teleop.
 	@Override
 	public void teleopInit() {
+		//Read sensors
+		this.robotMap.getUpdater().run();
+
 		//Enables the robot
 		if (!enabled) {
+			if (robotMap.getStartupCommand() != null) {
+				robotMap.getStartupCommand().start();
+			}
 			enabled = true;
 		}
 
@@ -107,6 +122,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		//Refresh the current time.
 		Clock.updateTime();
+		//Read sensors
+		this.robotMap.getUpdater().run();
 		//Run all commands. This is a WPILib thing you don't really have to worry about.
 		Scheduler.getInstance().run();
 	}

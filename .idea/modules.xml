@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Ballbasaur-Code-Rewrite.iml" filepath="$PROJECT_DIR$/.idea/Ballbasaur-Code-Rewrite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Ballbasaur-Code-Rewrite_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Ballbasaur-Code-Rewrite_main.iml" group="Ballbasaur-Code-Rewrite" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Ballbasaur-Code-Rewrite_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Ballbasaur-Code-Rewrite_test.iml" group="Ballbasaur-Code-Rewrite" />
+    </modules>
+  </component>
+</project>

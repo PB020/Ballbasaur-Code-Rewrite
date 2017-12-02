@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="Ballbasaur-Code-Rewrite:main" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="org.usfirst.frc.team449.ballbasaur-rewrite" external.system.module.type="sourceSet" external.system.module.version="1.0" type="JAVA_MODULE" version="4">
+<module external.linked.project.id="Ballbasaur-Code-Rewrite:main" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="org.usfirst.frc.team449.Ballbasaur-Code-Rewrite" external.system.module.type="sourceSet" external.system.module.version="1.0" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="FRC_FACET" name="FRC">
       <configuration />
@@ -31,21 +31,5 @@
     <orderEntry type="library" name="Gradle: thirdparty.frc.kauai:Navx-Java:3.0.331" level="project" />
     <orderEntry type="library" name="Gradle: com.github.blair-robot-project.449-central-repo:Pathgen:v6.1.0" level="project" />
     <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.17" level="project" />
-    <orderEntry type="module-library">
-      <library name="WPILib User Lib Directory">
-        <CLASSES>
-          <root url="file://$USER_HOME$/wpilib/user/java/lib" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="file://$USER_HOME$/wpilib/user/java/lib" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="file://$USER_HOME$/wpilib/user/java/lib" />
-        </SOURCES>
-        <jarDirectory url="file://$USER_HOME$/wpilib/user/java/lib" recursive="true" />
-        <jarDirectory url="file://$USER_HOME$/wpilib/user/java/lib" recursive="true" type="JAVADOC" />
-        <jarDirectory url="file://$USER_HOME$/wpilib/user/java/lib" recursive="true" type="SOURCES" />
-      </library>
-    </orderEntry>
   </component>
 </module>
