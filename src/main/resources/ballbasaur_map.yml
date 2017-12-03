@@ -74,6 +74,14 @@ intake:
                 inverted: false
         intakeVelocityFast: 1
         intakeVelocitySlow: .5
+shooter:
+    org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.SolenoidSimple:
+        '@id': shooter
+        piston:
+            '@id': shooterPiston
+            module: 0
+            forward: 0
+            reverse: 1
 pneumatics:
     org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
         '@id': pneumatics
@@ -180,6 +188,7 @@ buttons:
                 '@id': intakeReverseOffCommandList
                 commandList:
                     -   org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidReverse:
+                            &intakeReverseCommand
                             '@id': intakeReverseCommand
                             subsystem:
                                 org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
@@ -232,22 +241,39 @@ buttons:
             org.usfirst.frc.team449.robot.commands.general.CommandSequence:
                 '@id': ballShooterCommandList
                 commandList:
+                    -    org.usfirst.frc.team449.robot.commands.general.CommandSequence:
+                             '@id': shooterIntakeForwardInCommand
+                             commandList:
+                                 -    org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidForward:
+                                          '@id': shooterIntakeForwardCommand
+                                          subsystem:
+                                              org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
+                                                  intake
+                                 -    org.usfirst.frc.team449.robot.subsystem.interfaces.intake.commands.SetIntakeMode:
+                                          '@id': shooterIntakeRollerIn
+                                          mode: IN_FAST
+                                          subsystem:
+                                              org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
+                                                  intake
+                    -    org.usfirst.frc.team449.robot.commands.general.WaitForMillis:
+                             '@id': intakeForwardWait
+                             time: 500
                     -    org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidForward:
-                            intakeForwardCommand
-                            subsystem:
-                                org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
-                                    intake
+                             '@id': shooterPistonForward
+                             subsystem:
+                                 org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.SolenoidSimple:
+                                     shooter
+                    -    org.usfirst.frc.team449.robot.commands.general.WaitForMillis:
+                             '@id': afterShotWait
+                             time: 250
+                    -    org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidReverse:
+                             '@id': shooterPistonReverse
+                             subsystem:
+                                 org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.SolenoidSimple:
+                                     shooter
                     -    org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidForward:
-                            intakeForwardCommand
-                            subsystem:
-                                org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
-                                    intake
-                    -  org.usfirst.frc.team449.robot.commands.multiSubsystem.FireShooter:
-                            '@id': intakeRollerOff
-                            mode: "OFF"
-                            subsystem:
-                                org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
-                                    intake
+                             <<: *intakeReverseCommand
+                             '@id': intakeShooterReverse
         action: WHEN_PRESSED
 logger:
     '@id': logger
