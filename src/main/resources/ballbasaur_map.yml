@@ -188,7 +188,6 @@ buttons:
                 '@id': intakeReverseOffCommandList
                 commandList:
                     -   org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidReverse:
-                            &intakeReverseCommand
                             '@id': intakeReverseCommand
                             subsystem:
                                 org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
@@ -271,9 +270,11 @@ buttons:
                              subsystem:
                                  org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.SolenoidSimple:
                                      shooter
-                    -    org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidForward:
-                             <<: *intakeReverseCommand
-                             '@id': intakeShooterReverse
+                    -   org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidReverse:
+                            '@id': shooterIntakeReverseCommand
+                            subsystem:
+                                org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
+                                    intake
         action: WHEN_PRESSED
 logger:
     '@id': logger
