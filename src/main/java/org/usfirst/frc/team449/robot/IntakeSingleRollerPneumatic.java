@@ -55,19 +55,25 @@ public class IntakeSingleRollerPneumatic extends YamlSubsystem implements Subsys
 	public void setMode(@NotNull IntakeMode intakeMode) {
 		this.intakeMode = intakeMode;
 		switch (intakeMode){
-			case OFF: roller.disable();
+			case OFF:
+				roller.disable();
+				break;
 			case IN_FAST:
 				roller.enable();
 				roller.setVelocity(intakeVelocityFast);
+				break;
 			case IN_SLOW:
 				roller.enable();
 				roller.setVelocity(intakeVelocitySlow);
+				break;
 			case OUT_FAST:
 				roller.enable();
 				roller.setVelocity(-intakeVelocityFast);
+				break;
 			case OUT_SLOW:
 				roller.enable();
 				roller.setVelocity(-intakeVelocitySlow);
+				break;
 		}
 	}
 
