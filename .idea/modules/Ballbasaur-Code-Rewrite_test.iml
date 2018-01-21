@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="Ballbasaur-Code-Rewrite:test" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="org.usfirst.frc.team449.Ballbasaur-Code-Rewrite" external.system.module.type="sourceSet" external.system.module.version="1.0" type="JAVA_MODULE" version="4">
+<module external.linked.project.id="Ballbasaur-Code-Rewrite:test" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="org.usfirst.frc.team449.B" external.system.module.type="sourceSet" external.system.module.version="1.0" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output-test url="file://$MODULE_DIR$/../../out/test/classes" />
     <exclude-output />
@@ -10,23 +10,24 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Ballbasaur-Code-Rewrite_main" />
-    <orderEntry type="library" name="Gradle: com.github.blair-robot-project:449-central-repo:v6.1.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.blair-robot-project.449-central-repo:RoboRIO:v6.1.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.0.pr3" level="project" />
-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.9.0.pr3" level="project" />
-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.0.pr3" level="project" />
-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.9.0.pr3" level="project" />
-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.9.0.pr3" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
-    <orderEntry type="library" name="Gradle: edu.wpi.first.wpilibj:athena:2017.3.1" level="project" />
-    <orderEntry type="library" name="Gradle: edu.wpi.first.wpilib.networktables.java:NetworkTables:arm:3.1.7" level="project" />
-    <orderEntry type="library" name="Gradle: edu.wpi.first.wpilib.networktables.java:NetworkTables:desktop:3.1.7" level="project" />
-    <orderEntry type="library" name="Gradle: org.opencv:opencv-java:3.1.0" level="project" />
-    <orderEntry type="library" name="Gradle: edu.wpi.cscore.java:cscore:arm:1.0.2" level="project" />
-    <orderEntry type="library" name="Gradle: thirdparty.frc.ctre:Toolsuite-Java:4.4.1.14" level="project" />
-    <orderEntry type="library" name="Gradle: thirdparty.frc.kauai:Navx-Java:3.0.331" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.blair-robot-project.449-central-repo:Pathgen:v6.1.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.17" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.blair-robot-project:449-central-repo:eeea7baff2" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.blair-robot-project.449-central-repo:RoboRIO:eeea7baff2" level="project" />
+    <orderEntry type="library" name="Gradle: edu.wpi.first.wpilibj:wpilibj-java:2018.2.1" level="project" />
+    <orderEntry type="library" name="Gradle: edu.wpi.first.ntcore:ntcore-java:4.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: edu.wpi.first.wpiutil:wpiutil-java:3.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.opencv:opencv-java:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: edu.wpi.first.cscore:cscore-java:1.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: openrio.mirror.third.ctre:CTRE-phoenix-java:5.2.1.1" level="project" />
+    <orderEntry type="library" name="Gradle: openrio.mirror.third.kauailabs:navx-java:3.0.346" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.blair-robot-project.449-central-repo:449-central-repo:eeea7baff2" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.blair-robot-project.449-central-repo:Pathgen:eeea7baff2" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.9.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.9.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.9.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains:annotations:15.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.18" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="Ballbasaur-Code-Rewrite_main" />
 </module>

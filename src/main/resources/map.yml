@@ -1,0 +1,306 @@
+---
+logger:
+    '@id': logger
+    loopTimeSecs: 0.025
+    eventLogFilename: "/home/lvuser/logs/eventLog-"
+    telemetryLogFilename: "/home/lvuser/logs/telemetryLog-"
+    subsystems:
+        - org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyro:
+            '@id': drive
+            #Wheelbase: 2.16810362021
+            leftMaster:
+                org.usfirst.frc.team449.robot.jaksonWrappers.FPSTalon:
+                    &leftMaster
+                    '@id': leftMaster
+                    name: left
+                    port: 5
+                    reverseOutput: true
+                    reverseSensor: false
+                    enableBrakeMode: true
+                    currentLimit: 40
+                    enableVoltageComp: true
+                    feedbackDevice: QuadEncoder
+                    encoderCPR: 256
+                    startingGear: LOW
+                    perGearSettings:
+                        - &lowGear
+                          gear: LOW
+                    minNumPointsInBottomBuffer: 10
+                    updaterProcessPeriodSecs: 0.005
+                    statusFrameRatesMillis: !!map
+                        Status_4_AinTempVbat : 15
+                    slaves:
+                        - '@id': talon2
+                          port: 6
+                          inverted: true
+                        - '@id': talon3
+                          port: 1
+                          inverted: true
+            rightMaster:
+                org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
+                    <<: *leftMaster
+                    '@id': rightMaster
+                    name: right
+                    port: 2
+                    reverseOutput: false
+                    reverseSensor: false
+                    perGearSettings:
+                        - <<: *lowGear
+                        - <<: *highGear
+                    slaves:
+                        - '@id': talon5
+                          port: 9
+                          inverted: false
+                        - '@id': talon6
+                          port: 8
+                          inverted: false
+            ahrs:
+                org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
+                    '@id': navX
+                    port: kMXP
+                    invertYaw: true
+        - org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
+            '@id': oi
+            gamepad:
+                org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                    '@id': driverGamepad
+                    port: 1
+            rotThrottle:
+                org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
+                    &rotThrottle
+                    '@id': rotThrottle
+                    stick: driverGamepad
+                    axis: 4
+                    smoothingTimeSecs: 0.04
+                    deadband: 0.05
+                    inverted: false
+                    polynomial:
+                        '@id': rotPoly
+                        powerToCoefficientMap: !!map
+                            2 : 1
+            fwdThrottle:
+                org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
+                    <<: *rotThrottle
+                    '@id': fwdThrottle
+                    axis: 1
+                    inverted: true
+                    polynomial:
+                        '@id': fwdPoly
+                        powerToCoefficientMap: !!map
+                            2 : 1
+            invertDPad: false
+            dPadShift: 0.1
+            turnInPlaceRotScale: 0.5
+            scaleRotByFwdPoly:
+                '@id': scaleRotByFwdPoly
+                powerToCoefficientMap: !!map
+                    0.5: 0.6
+                    0: 0.2
+        - org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
+            rotThrottle
+        - org.usfirst.frc.team449.robot.oi.throttles.ThrottlePolynomial:
+            fwdThrottle
+        - org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
+            '@id': pneumatics
+            nodeID: 15
+        - org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+            '@id': poseEstimator
+            subsystem:
+                org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyro:
+                    drive
+            absolutePosAngleTolerance: 5
+        - org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
+            leftMaster
+        - org.usfirst.frc.team449.robot.jacksonWrappers.FPSTalon:
+            rightMaster
+        - org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
+            navX
+        - org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXDefaultDrive:
+              '@id': defaultDriveCommand
+              absoluteTolerance: 0
+              deadband: 2
+              maxAngularVelToEnterLoop: 0.05
+              inverted: false
+              driveStraightLoopEntryTimer:
+                  '@id': driveStraightLoopEntryTimer
+                  bufferTimeSeconds: 0.15
+              subsystem:
+                  org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyro:
+                      drive
+              oi:
+                  org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
+                      oi
+defaultCommands:
+    - subsystem:
+        org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyro:
+            drive
+      command:
+        org.usfirst.frc.team449.robot.commands.multiInterface.drive.UnidirectionalNavXDefaultDrive:
+            defaultDriveCommand
+startupCommand:
+    org.usfirst.frc.team449.robot.commands.general.ParallelCommandGroup:
+        '@id': startupCommand
+        commandSet:
+            - org.usfirst.frc.team449.robot.commands.general.RunRunnables:
+                '@id': runRunnables
+                runnables:
+                    - org.usfirst.frc.team449.robot.other.UnidirectionalPoseEstimator:
+                        poseEstimator
+teleopStartupCommand:
+    org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.commands.StartCompressor:
+        '@id': startCompressor
+        subsystem:
+            org.usfirst.frc.team449.robot.subsystem.singleImplementation.pneumatics.Pneumatics:
+                pneumatics
+autoStartupCommand:
+    org.usfirst.frc.team449.robot.drive.unidirectional.commands.VoltageRamp:
+        '@id': voltageRamp
+        subsystem:
+            drive
+#autoStartupCommand:
+#    org.usfirst.frc.team449.robot.drive.unidirectional.commands.DriveAtSpeed:
+#        '@id': driveAtSpeed
+#        subsystem:
+#            drive
+updater:
+    org.usfirst.frc.team449.robot.other.Updater:
+        '@id': updater
+        updatables:
+            - org.usfirst.frc.team449.robot.drive.unidirectional.DriveUnidirectionalWithGyro:
+                drive
+            - org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
+                oi
+            - org.usfirst.frc.team449.robot.jacksonWrappers.MappedAHRS:
+                navX
+ buttons:
+    -   button:
+            org.usfirst.frc.team449.robot.oi.buttons.TriggerButton:
+                '@id': intakeForwardButton
+                throttle:
+                    org.usfirst.frc.team449.robot.oi.throttles.ThrottleBasic:
+                        '@id': intakeForwardButtonThrottle
+                        stick:
+                            org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                                driverGamepad
+                        axis: 2
+                triggerAt: 0.7
+        command:
+            org.usfirst.frc.team449.robot.commands.general.CommandSequence:
+                '@id': intakeForwardInCommand
+                commandList:
+                    -    org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidForward:
+                            '@id': intakeForwardCommand
+                            subsystem:
+                                org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
+                                    intake
+                    -    org.usfirst.frc.team449.robot.subsystem.interfaces.intake.commands.SetIntakeMode:
+                            '@id': intakeRollerIn
+                            mode: IN_FAST
+                            subsystem:
+                                org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
+                                    intake
+        action: WHEN_PRESSED
+    -   button:
+            org.usfirst.frc.team449.robot.oi.buttons.TriggerButton:
+                '@id': intakeReverseButton
+                throttle:
+                    org.usfirst.frc.team449.robot.oi.throttles.ThrottleBasic:
+                        '@id': intakeReverseButtonThrottle
+                        stick:
+                            org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                                driverGamepad
+                        axis: 3
+                triggerAt: 0.7
+        command:
+            org.usfirst.frc.team449.robot.commands.general.CommandSequence:
+                '@id': intakeReverseOffCommandList
+                commandList:
+                    -   org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidReverse:
+                            '@id': intakeReverseCommand
+                            subsystem:
+                                org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
+                                    intake
+                    -   org.usfirst.frc.team449.robot.subsystem.interfaces.intake.commands.SetIntakeMode:
+                            '@id': intakeRollerOff
+                            mode: "OFF"
+                            subsystem:
+                                org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
+                                    intake
+        action: WHEN_PRESSED
+    -   button:
+            org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
+                '@id': rollerOutButton
+                joystick:
+                    org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                        driverGamepad
+                buttonNumber: 4
+        command:
+            org.usfirst.frc.team449.robot.subsystem.interfaces.intake.commands.SetIntakeMode:
+                '@id': rollerOutCommand
+                mode: OUT_FAST
+                subsystem:
+                    org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
+                        intake
+        action: WHEN_PRESSED
+    -   button:
+            org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
+                '@id': rollerOffButton
+                joystick:
+                    org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                        driverGamepad
+                buttonNumber: 3
+        command:
+            org.usfirst.frc.team449.robot.subsystem.interfaces.intake.commands.SetIntakeMode:
+                '@id': rollerOffCommand
+                mode: "OFF"
+                subsystem:
+                    org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
+                        intake
+        action: WHEN_PRESSED
+    -   button:
+            org.usfirst.frc.team449.robot.oi.buttons.SimpleButton:
+                '@id': ballShooterButton
+                joystick:
+                    org.usfirst.frc.team449.robot.jacksonWrappers.MappedJoystick:
+                        driverGamepad
+                buttonNumber: 2
+        command:
+            org.usfirst.frc.team449.robot.commands.general.CommandSequence:
+                '@id': ballShooterCommandList
+                commandList:
+                    -    org.usfirst.frc.team449.robot.commands.general.CommandSequence:
+                             '@id': shooterIntakeForwardInCommand
+                             commandList:
+                                 -    org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidForward:
+                                          '@id': shooterIntakeForwardCommand
+                                          subsystem:
+                                              org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
+                                                  intake
+                                 -    org.usfirst.frc.team449.robot.subsystem.interfaces.intake.commands.SetIntakeMode:
+                                          '@id': shooterIntakeRollerIn
+                                          mode: IN_FAST
+                                          subsystem:
+                                              org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
+                                                  intake
+                    -    org.usfirst.frc.team449.robot.commands.general.WaitForMillis:
+                             '@id': intakeForwardWait
+                             time: 500
+                    -    org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidForward:
+                             '@id': shooterPistonForward
+                             subsystem:
+                                 org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.SolenoidSimple:
+                                     shooter
+                    -    org.usfirst.frc.team449.robot.commands.general.WaitForMillis:
+                             '@id': afterShotWait
+                             time: 250
+                    -    org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidReverse:
+                             '@id': shooterPistonReverse
+                             subsystem:
+                                 org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.SolenoidSimple:
+                                     shooter
+                    -   org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.commands.SolenoidReverse:
+                            '@id': shooterIntakeReverseCommand
+                            subsystem:
+                                org.usfirst.frc.team449.robot.IntakeSingleRollerPneumatic:
+                                    intake
+        action: WHEN_PRESSED

@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.SpeedController;
 import org.jetbrains.annotations.NotNull;
 import org.usfirst.frc.team449.robot.generalInterfaces.simpleMotor.SimpleMotor;
 import org.usfirst.frc.team449.robot.jacksonWrappers.MappedDoubleSolenoid;
-import org.usfirst.frc.team449.robot.jacksonWrappers.YamlSubsystem;
 import org.usfirst.frc.team449.robot.subsystem.interfaces.intake.SubsystemIntake;
 import org.usfirst.frc.team449.robot.subsystem.interfaces.solenoid.SubsystemSolenoid;
 
