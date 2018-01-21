@@ -134,6 +134,14 @@ defaultDriveCommand:
         oi:
             org.usfirst.frc.team449.robot.oi.unidirectional.arcade.OIArcadeWithDPad:
                 oi
+nonMPAutoCommand:
+    org.usfirst.frc.team449.robot.drive.unidirectional.commands.DriveAtSpeed:
+        '@id': nonMPAuto
+        subsystem:
+            org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonCluster:
+                drive
+        velocity: 1.0
+        seconds: 1.5
 startupCommand:
     org.usfirst.frc.team449.robot.commands.general.RunRunnables:
         '@id': runRunnables
@@ -144,7 +152,21 @@ startupCommand:
                     org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonCluster:
                         drive
                 absolutePosAngleTolerance: 5
-buttons:
+ autoStartupCommand:
+     org.usfirst.frc.team449.robot.commands.general.ParallelCommandGroup:
+         '@id': startAutoCommand
+         commandSet:
+             - org.usfirst.frc.team449.robot.drive.commands.EnableMotors:
+                 '@id': enableMotorsAuto
+                 subsystem:
+                     org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+                         drive
+             - org.usfirst.frc.team449.robot.drive.commands.ResetPosition:
+                 '@id': resetPosition
+                 subsystem:
+                     org.usfirst.frc.team449.robot.drive.unidirectional.DriveTalonClusterShiftable:
+                         drive
+ buttons:
     -   button:
             org.usfirst.frc.team449.robot.oi.buttons.TriggerButton:
                 '@id': intakeForwardButton
